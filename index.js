@@ -5,7 +5,9 @@ const morgan = require('morgan')
 
 morgan.token('post-body', req => req.method === "POST" ? JSON.stringify(req.body) : "")
 
+
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :post-body'))
+app.use(express.static('build'))
 app.use(express.json())
 
 
@@ -110,7 +112,7 @@ const unknownEndpoint = (request, response) => {
 app.use(unknownEndpoint)
 
 
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })
